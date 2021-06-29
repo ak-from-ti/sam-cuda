@@ -22,7 +22,7 @@
                     <header>
                         <button name="load_checklist_items" string="Limits Eligible" type="object" groups="appsmod2.group_appsmod2_loan_officer" class="btn-primary" />
                         <button name="action_decline" string="Decline" type="object" groups="appsmod2.group_appsmod2_loan_officer" />
-                        <button name="action_limits_not_eligible" string="Limits Not Eligible" type="object" group="appsmod2.group_appsmod2_loan_officer" />
+                        <button name="action_limits_not_eligible" string="Limits Not Eligible" type="object" groups="appsmod2.group_appsmod2_loan_officer" />
                         <field name="state" widget="statusbar" statusbar_visible="draft,limits_eligible,pre_application_complete,application_requested"/>
                     </header>
                     <sheet>

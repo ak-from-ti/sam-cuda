@@ -139,7 +139,7 @@ class Application(models.Model):
     
 
     name = fields.Char("Application Reference", readonly=True, tracking=True, copy=False, default=lambda self: _('New'))
-    state = fields.Selection(STATE_SELECTION, "Status", tracking=True, readonly=True, default="draft", copy=False, select=True)
+    state = fields.Selection(STATE_SELECTION, "Status", tracking=True, readonly=True, default="draft", copy=False)
     original_assignee = fields.Many2one("res.users", "Indicator - Original Assignee", default=lambda self: self.env.user, copy=False)
     officer_category_id = fields.Integer("Indicator - External Assessor ID", compute="_compute_officer_category_id")
     senior_officer_category_id = fields.Integer("Indicator - Senior Officer Category ID", compute="_compute_senior_officer_category_id")
