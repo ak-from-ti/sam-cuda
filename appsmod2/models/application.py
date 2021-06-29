@@ -211,7 +211,7 @@ class Application(models.Model):
     esis_aprc_1 = fields.Float("APRC + 1%", compute="_compute_aprc", store=True, tracking=True, copy=False, help="Annual Percentage Rate of Charge + 1%")
 
     # Column 1
-    first_time_buyer = fields.Selection(YES_NO, srting="First Time Buyer", default="yes", tracking=True, copy=False)
+    first_time_buyer = fields.Selection(YES_NO, string="First Time Buyer", default="yes", tracking=True, copy=False)
     first_time_buyer_value = fields.Float("First Time Value", default=90.0, copy=False)
     single = fields.Selection(SINGLE, "Single/Couple", default="1300", copy=False, tracking=True)
     applicant_1 = fields.Many2one("res.partner", "Applicant 1", tracking=True, copy=False)
