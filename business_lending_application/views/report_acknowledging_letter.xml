@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_template_acknowledging_letter">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            <div class="page">
+                <h5 class='text-center'><strong>Application for Credit Facility</strong></h5>
+            </div>
+
+            <div class="row" t-if="o.business_borrower.name">
+                <div class="col-12 mt-3">
+                    Dear <span t-field="o.business_borrower.name"/>
+                    <p>
+                    We refer to your recent application <strong t-field="o.name"/> for a Business Lending and advise that this application is currently being considered and we will be contact with you shortly.
+                    </p>
+                    <p>
+                        Thank you for this opportunity.  
+                    </p>
+                    <p>
+                        Kind regards,
+                    </p>
+                    <p>
+                        Yours sincerely,
+                    </p>
+                    <p t-field="o.create_uid.partner_id.name"/>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="template_acknowledging_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.create_uid.partner_id.lang or o.create_uid.company_id.partner_id.lang"/>
+                <t t-call="business_lending_application.report_template_acknowledging_letter" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

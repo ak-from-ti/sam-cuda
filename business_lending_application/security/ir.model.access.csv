@@ -1,0 +1,12 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_business_application","access.business.application","model_business_application","base.group_user",1,1,1,1
+"access_business_interest_rate","access.business.interest.rate","model_business_interest_rate","base.group_user",1,1,1,1
+"access_business_assets","access.business.assets","model_business_assets","base.group_user",1,1,1,1
+"access_businessapplicationclose","access.business.application.close","model_business_application_close","base.group_user",1,1,1,1
+"access_business_message","access.business.message","model_business_message","base.group_user",1,1,1,1
+"access_business_checklist","access.business.checklist","model_business_checklist","base.group_user",1,1,1,1
+"access_business_application_checklist","access.business.application.checklist","model_business_application_checklist","base.group_user",1,1,1,1
+"access_business_account","access.business.account","model_business_account","base.group_user",1,1,1,1
+"access_business_related_document","access.business.related.document","model_business_related_document","base.group_user",1,1,1,1
+"access_relationship_related_document","access.relationship.related.document","model_relationship_related_document","base.group_user",1,1,1,1
+"access_decision_group","access.decision.group","model_decision_group","base.group_user",1,1,1,1

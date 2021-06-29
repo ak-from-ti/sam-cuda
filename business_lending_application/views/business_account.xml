@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_business_account_tree" model="ir.ui.view">
+            <field name="name">business.account.tree</field>
+            <field name="model">business.account</field>
+            <field name="arch" type="xml">
+                <tree string="Business Account">
+                    <field name='period_end'/>
+                    <field name='total_current_assets'/>
+                    <field name='total_current_liabilities' />
+                    <field name='net_assets_liabilities' />
+                    <field name='total_fixed_assets' />
+                    <field name='total_capital_employed' />
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_account_view_form" model="ir.ui.view">
+            <field name="name">Business.account.Form</field>
+            <field name="model">business.account</field>
+            <field name="arch" type="xml">
+                <form string="Business Account">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name='period_end'/>
+                                <field name="current_assets" />
+                                <field name='stock'/>
+                                <field name='debtors'/>
+                                <field name='cash_bank_balance'/>
+                                <field name='total_current_assets'/>
+                            </group>
+                            <group>
+                                <field name='current_liabilities'/>
+                                <field name='creditors'/>
+                                <field name='taxation'/>
+                                <field name='dividends'/>
+                                <field name='current_borrowings'/>
+                                <field name='director_accounts'/>
+                                <field name='total_current_liabilities'/>
+                                <field name='net_assets_liabilities'/>
+                            </group>
+                            <group>
+                                <field name='current_ratio'/>
+                                <field name='other_assets'/>
+                                <field name='land_building'/>
+                                <field name='investment_company'/>
+                                <field name='pem_vehicle'/>
+                                <field name='total_fixed_assets'/>
+                                <field name='total_capital_employed'/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

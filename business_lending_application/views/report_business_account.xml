@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_template_business_account">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            <div class="page">
+                <h5 class='text-center'><strong>Business Accounting Details for the Business Application <span t-field="o.name"/> </strong></h5>
+            </div>
+
+            <div class="row my-3">
+                <hr/>
+                <hr/>
+                
+                <table t-if='o.business_account_ids' class="table table-sm table-bordered table-striped">
+                    <thead class='thead-dark'>
+                        <tr>
+                            <th>Period End</th>
+                            <t t-foreach="o.business_account_ids" t-as="business_account">
+                                <th><t t-esc="business_account.period_end"/></th>
+                            </t>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set='valid_fields' t-value='o.business_account_ids._valid_fields()'/>
+                        <t t-set='compute_field' t-value='o.business_account_ids._get_compute_field()'/>
+                        <t t-foreach="valid_fields" t-as="field">
+                            <tr t-att-class="'table-info' if field in compute_field else ''">
+                                <td><span t-esc='o.business_account_ids._fields[field].string.upper()'/></td>
+                                <t t-foreach="o.business_account_ids" t-as="business_account">
+                                    <td><t t-esc="business_account._get_field_value(field)"/></td>
+                                </t>
+                            </tr>
+                        </t>
+
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="template_business_account">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.create_uid.partner_id.lang or o.create_uid.company_id.partner_id.lang"/>
+                <t t-call="business_lending_application.report_template_business_account" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

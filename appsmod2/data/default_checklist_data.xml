@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+    	<!-- <delete model="ir.ui.menu" id="mail.menu_root_discuss"/> 
+    	<delete id="base.res_partner_title_madam" model="res.partner.title"/>
+    	<delete id="base.res_partner_title_miss" model="res.partner.title"/>
+    	<delete id="base.res_partner_title_sir" model="res.partner.title"/>
+    	<delete id="base.res_partner_title_mister" model="res.partner.title"/>
+    	<delete id="base.res_partner_title_doctor" model="res.partner.title"/>
+    	<delete id="base.res_partner_title_prof" model="res.partner.title"/> -->
+    	
+    	<record id="res_partner_title_mr1" model="res.partner.title">
+            <field name="name">Mr.</field>
+            <field name="shortcut">Mr.</field>
+        </record>
+        
+        <record id="res_partner_title_mrs1" model="res.partner.title">
+            <field name="name">Mrs.</field>
+            <field name="shortcut">Mrs.</field>
+        </record>
+        
+        <record id="res_partner_title_ms1" model="res.partner.title">
+            <field name="name">Ms.</field>
+            <field name="shortcut">Ms.</field>
+        </record>
+    	
+		<record id="appl_1" forcecreate="False" model="application.checklist">
+		    <field name="name">Completed Application Form With Consents</field>
+		    <field name="type">all_applicants</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>		    
+		    <field name="state">consent_signed</field>
+		    <field name="sequence">1</field>
+		</record>
+		
+		<record id="appl_2" forcecreate="False" model="application.checklist">
+		    <field name="name">Signed Declarations, Authorisations and Consents Form</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">2</field>
+		</record>
+		
+		<record id="appl_3" forcecreate="False" model="application.checklist">
+		    <field name="name">Proof of identity (passport, driver’s licence)</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">3</field>
+		</record>
+		
+		<record id="appl_4" forcecreate="False" model="application.checklist">
+		    <field name="name">Proof of address (bank statement, utility bill)</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>		
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">4</field>
+		</record>
+		
+		<record id="appl_5" forcecreate="False" model="application.checklist">
+		    <field name="name">6 months’ savings statements</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">5</field>
+		</record>
+		
+		<record id="appl_6" forcecreate="False" model="application.checklist">
+		    <field name="name">6 months’ credit card statements</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">6</field>
+		</record>
+		
+		<record id="appl_7" forcecreate="False" model="application.checklist">
+		    <field name="name">12 months’ loan statements</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+	 	    <field name="sequence">7</field>
+		</record>
+		
+		<record id="appl_8" forcecreate="False" model="application.checklist">
+		    <field name="name">12 months’ mortgage statements</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">8</field>
+		</record>
+		
+		<record id="appl_9" forcecreate="False" model="application.checklist">
+		    <field name="name">Separation / Divorce Agreement</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>		    	    
+		    <field name="sequence">9</field>
+		</record>
+		
+		<record id="appl_10" forcecreate="False" model="application.checklist">
+		    <field name="name">Confirmation of Gift Letter where assisted with deposit</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>		
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">10</field>
+		</record>
+		
+		<record id="appl_11" forcecreate="False" model="application.checklist">
+		    <field name="name">Stamp 4/5 for non EU nationals</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">TRUE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">11</field>
+		</record>
+		
+		<record id="appl_12" forcecreate="False" model="application.checklist">
+		    <field name="name">Property Valuation Report</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">12</field>
+		</record>
+		
+		<record id="appl_13" forcecreate="False" model="application.checklist">
+		    <field name="name">For Top Up or Mover mortgage, have you located title documents?</field>
+		    <field name="type">all_applicants_individual</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">13</field>
+		</record>
+		
+		<record id="appl_14" forcecreate="False" model="application.checklist">
+		    <field name="name">Income certificate(s) signed, dated and stamped by employer</field>
+		    <field name="type">paye_employees</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">14</field>
+		</record>
+		
+		<record id="appl_15" forcecreate="False" model="application.checklist">
+		    <field name="name">3 months consecutive payslips to confirm basic salary</field>
+		    <field name="type">paye_employees</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">15</field>
+		</record>
+		
+		<record id="appl_16" forcecreate="False" model="application.checklist">
+		    <field name="name">Most recent P60 (P21 required if P60 handwritten)</field>
+		    <field name="type">paye_employees</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">16</field>
+		</record>
+		
+		<record id="appl_17" forcecreate="False" model="application.checklist">
+		    <field name="name">6 months up to date personal current accounts statements</field>
+		    <field name="type">paye_employees</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>		  
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">17</field>
+		</record>
+		
+		<record id="appl_18" forcecreate="False" model="application.checklist">
+		    <field name="name">Most recent 3 Years audited / trading accounts certified by accountant</field>
+		    <field name="type">self_employed</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">18</field>
+		</record>
+		
+		<record id="appl_19" forcecreate="False" model="application.checklist">
+		    <field name="name">Accountant’s confirmation of up to date tax position</field>
+		    <field name="type">self_employed</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">19</field>
+		</record>
+		
+		<record id="appl_20" forcecreate="False" model="application.checklist">
+		    <field name="name">Most recent 3 years Revenue Notice of Assessment</field>
+		    <field name="type">self_employed</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">20</field>
+		</record>
+		
+		<record id="appl_21" forcecreate="False" model="application.checklist">
+		    <field name="name">12 months up to date business current account statements</field>
+		    <field name="type">self_employed</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">21</field>
+		</record>
+		
+		<record id="appl_22" forcecreate="False" model="application.checklist">
+		    <field name="name">Profile / background of company</field>
+		    <field name="type">self_employed</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>	
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">22</field>
+		</record>
+		
+		<record id="appl_23" forcecreate="False" model="application.checklist">
+		    <field name="name">6 months up to date personal current accounts statements</field>
+		    <field name="type">self_employed</field>
+		    <field name="applicable_for_eu_citizen">FALSE</field>
+		    <field name="active">TRUE</field>		
+		    <field name="state">application_form_received</field>
+		    <field name="sequence">23</field>
+		</record>
+    	
+    </data>
+</odoo>

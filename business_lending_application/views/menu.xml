@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- Top menu item -->
+        <menuitem id="business_lending_menu_root"
+            name="Business Lending"
+            web_icon="sale_management,static/description/icon.png"
+            active="True"
+            sequence="7"/>
+
+        
+        <menuitem id="business_menu"
+            name="Menu"
+            parent="business_lending_menu_root"
+            sequence="2"/>
+
+
+        <menuitem id="business_application_menu"
+            name="Lending Application"
+            parent="business_menu"
+            action="business_lending_application.business_application_action_customer"
+            sequence="2"/>
+
+
+        <menuitem id="business_borrower_menu"
+            name="Borrowers"
+            parent="business_menu"
+            action="business_lending_application.business_borrower_action_customer"
+            sequence="5"/>
+
+
+        <menuitem id="business_relationship_menu"
+            name="Relationship"
+            parent="business_menu"
+            action="business_lending_application.business_relationship_action_customer"
+            sequence="5"/>
+
+
+        <menuitem id="business_configuration"
+            name="Configuration"
+            parent="business_lending_menu_root"
+            sequence="5"/>
+
+
+        <menuitem id="business_interest_rate_menu"
+            name="Interest Rate"
+            parent="business_configuration"
+            action="business_lending_application.business_interest_rate_action_customer"
+            sequence="5"/>
+
+
+        <menuitem id="business_checklist_menu"
+            name="Checklist"
+            parent="business_configuration"
+            action="business_lending_application.business_checklist_action_customer"
+            sequence="5"/>
+
+        <menuitem id="decision_group_menu"
+            name="Decision-Making Group"
+            parent="business_configuration"
+            action="business_lending_application.decision_group_action_customer"
+            sequence="5"/>
+
+</odoo>

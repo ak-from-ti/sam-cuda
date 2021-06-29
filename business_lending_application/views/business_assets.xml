@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_business_assets_tree" model="ir.ui.view">
+            <field name="name">business.assets.tree</field>
+            <field name="model">business.assets</field>
+            <field name="arch" type="xml">
+                <tree string="Business Assets">
+                    <field name="name"/>
+                    <field name='business_borrower' />
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_assets_view_form" model="ir.ui.view">
+            <field name="name">Business.assets.Form</field>
+            <field name="model">business.assets</field>
+            <field name="arch" type="xml">
+                <form string="Business Assets">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name='name'/>
+                                <field name="business_borrower" context="{'form_view_ref': 'business_lending_application.business_borrower_view_form'}"/>
+                                <field name='liability'/>
+                                <field name='financial_institute'/>
+                            </group>
+                            <group>
+                                <field name='repayment'/>
+                                <field name='term'/>
+                                <field name='income'/>
+                                <field name='value'/>
+                                <field name='business_application_id'/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="business_assets_action_customer" model="ir.actions.act_window">
+            <field name="name">Business Assets</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">business.assets</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref='view_business_assets_tree'/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create Business Assets for your Business Borrower.
+              </p>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

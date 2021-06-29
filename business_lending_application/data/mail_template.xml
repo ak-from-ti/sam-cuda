@@ -1,0 +1,218 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!-- Mail template are declared in a NOUPDATE block
+         so users can freely customize/delete them -->
+    <data noupdate="1">
+        <!--Email template -->
+        <record id="email_template_edi_lending_pack" model="mail.template">
+            <field name="name">Lending Pack State: Send by email</field>
+            <field name="model_id" ref="business_lending_application.model_business_application"/>
+            <field name="email_from">"${object.create_uid.company_id.name | safe}" &lt;${(object.create_uid.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.create_uid.email_formatted | safe}</field>
+            <field name="subject">Lending Pack Follow up reminder for Application : ${object.name}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                        % if object.create_uid.partner_id.parent_id:
+                            ${object.create_uid.partner_id.name} (${object.create_uid.partner_id.parent_id.name}),
+                        % else:
+                            ${object.create_uid.partner_id.name},
+                        % endif
+                        <br /><br />
+
+                        This is Follow up reminder for business application number : <strong>${object.name}</strong>
+                        
+                        <br /><br />
+                        7 day prompt to follow up and contact member for return of Financial Information /Lending Pack to progress their business loan application.
+                        Close application if not proceeding and capture reason for same.
+                        
+                        <br /><br />
+                        
+                        Thanks,
+                        % if user.signature:
+                            <br/>
+                            ${user.signature | safe}
+                        % endif
+                    </p>
+                </div>
+            </field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+        <record id="email_template_edi_info_received" model="mail.template">
+            <field name="name">Info Received State: Send by email</field>
+            <field name="model_id" ref="business_lending_application.model_business_application"/>
+            <field name="email_from">"${object.create_uid.company_id.name | safe}" &lt;${(object.create_uid.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.create_uid.email_formatted | safe}</field>
+            <field name="subject">Info Received State Follow up reminder for Application : ${object.name}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                        % if object.create_uid.partner_id.parent_id:
+                            ${object.create_uid.partner_id.name} (${object.create_uid.partner_id.parent_id.name}),
+                        % else:
+                            ${object.create_uid.partner_id.name},
+                        % endif
+                        <br /><br />
+
+                        This is Follow up reminder for business application number : <strong>${object.name}</strong>
+                        
+                        <br /><br />
+                        7 day prompt after initial meeting, to follow up and contact member for any outstanding financial information to progress their business loan application, if the documentation has not been received.
+                        Close application if not proceeding and capture reason for same.
+                        
+                        <br /><br />
+                        
+                        Thanks,
+                        % if user.signature:
+                            <br/>
+                            ${user.signature | safe}
+                        % endif
+                    </p>
+                </div>
+            </field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_template_edi_acknowledging_application" model="mail.template">
+            <field name="name">Print the Template Letter of Acknowledging Application</field>
+            <field name="model_id" ref="business_lending_application.model_business_application"/>
+            <field name="email_from">"${object.create_uid.company_id.name | safe}" &lt;${(object.create_uid.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.create_uid.email_formatted | safe}</field>
+            <field name="subject">Print the Template Letter of Acknowledging Application : ${object.name}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                        % if object.create_uid.partner_id.parent_id:
+                            ${object.create_uid.partner_id.name} (${object.create_uid.partner_id.parent_id.name}),
+                        % else:
+                            ${object.create_uid.partner_id.name},
+                        % endif
+                        <br /><br />
+
+                        This is Follow up reminder for business application number : <strong>${object.name}</strong>
+                        
+                        <br /><br />
+                        SME Regulation requires a credit union to acknowledge receipt of an application for credit [once all information is received] within 5 working days of receipt of the application. Please issue ‘Receipt of Credit Application within 5 day letter.
+                        <br /><br />
+                        
+                        Thanks,
+                        % if user.signature:
+                            <br/>
+                            ${user.signature | safe}
+                        % endif
+                    </p>
+                </div>
+            </field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_template_edi_assessor_notify" model="mail.template">
+            <field name="name">Assessor Notify</field>
+            <field name="model_id" ref="business_lending_application.model_business_application"/>
+            <field name="email_from">"${object.create_uid.company_id.name | safe}" &lt;${(object.create_uid.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.assessor_id.email_formatted | safe}</field>
+            <field name="subject">Business Application: ${object.name} Assign for assessment</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                        % if object.assessor_id.parent_id:
+                            ${object.assessor_id.name} (${object.assessor_id.parent_id.name}),
+                        % else:
+                            ${object.assessor_id.name},
+                        % endif
+                        <br /><br />
+                        Business Loan application :${object.name} for borrower <strong>${object.business_borrower.name}</strong> is ready for Central Assessment.
+                        Upon completion of cover note please notify credit union.
+                        <br /><br />
+                        
+                        Thanks,
+                        % if user.signature:
+                            <br/>
+                            ${user.signature | safe}
+                        % endif
+                    </p>
+                </div>
+            </field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+        <record id="email_template_edi_decision_group_notify" model="mail.template">
+            <field name="name">Decision Group Notify</field>
+            <field name="model_id" ref="business_lending_application.model_business_application"/>
+            <field name="email_from">"${object.create_uid.company_id.name | safe}" &lt;${(object.create_uid.company_id.email or user.email) | safe}&gt;</field>
+            <!-- <field name="email_to">${object.decision_group_id.user_ids.mapped('email_formatted') | safe}</field> -->
+            <field name="subject">Business Application: ${object.name} is now ready for decision</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                            ${ctx['user'].name},
+                        <br /><br />
+                        Central Assessment have completed their review of the business loan application : ${object.name} in the name of <strong>${object.business_borrower.name}</strong> and the cover note is complete.
+                        This application is now ready for decision.
+                        <br /><br />
+                        
+                        Thanks,
+                        % if user.signature:
+                            <br/>
+                            ${user.signature | safe}
+                        % endif
+                    </p>
+                </div>
+            </field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+         <record id="email_template_edi_approval_pending_notify" model="mail.template">
+            <field name="name">Approval/Decline Template: Send by email</field>
+            <field name="model_id" ref="business_lending_application.model_business_application"/>
+            <field name="email_from">"${object.create_uid.company_id.name | safe}" &lt;${(object.create_uid.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.create_uid.email_formatted | safe}</field>
+            <field name="subject">Follow up reminder for Application : ${object.name}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                        % if object.create_uid.partner_id.parent_id:
+                            ${object.create_uid.partner_id.name} (${object.create_uid.partner_id.parent_id.name}),
+                        % else:
+                            ${object.create_uid.partner_id.name},
+                        % endif
+                        <br /><br />
+
+                        This is Follow up reminder for business application number : <strong>${object.name}</strong>
+                        
+                        <br /><br />
+                        If a credit union cannot make a decision within 15 working days of receipt of a completed application on whether it will grant or refuse an application for credit, the credit union is to inform the borrower, of the reasons why the regulated entity’s assessment of the application will take longer than 15 working days and the expected timeframe within which a decision will be made. Please issue letter entitled ‘Credit Application over 15 days, no information’
+                        
+                        Where the reason that the credit union cannot make a decision within 15 working days is that the credit union requires further information, they will inform the borrower, of the information that it requires and the timeframe within which the information should be provided. Please issue letter entitled ‘Credit Application over 15 days, more information.
+                        
+                        <br /><br />
+                        
+                        Thanks,
+                        % if user.signature:
+                            <br/>
+                            ${user.signature | safe}
+                        % endif
+                    </p>
+                </div>
+            </field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>

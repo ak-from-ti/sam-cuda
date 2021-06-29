@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+
+        <record id="business_application_acknowledging_letter" model="ir.actions.report">
+            <field name="name">Print Acknowledging template Letter</field>
+            <field name="model">business.application</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">business_lending_application.template_acknowledging_letter</field>
+            <field name="report_file">business_lending_application.template_acknowledging_letter</field>
+            <field name="binding_model_id" ref="model_business_application"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="business_application_accounting_detail" model="ir.actions.report">
+            <field name="name">Print Business Accounting Detail of Application</field>
+            <field name="model">business.application</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">business_lending_application.template_business_account</field>
+            <field name="report_file">business_lending_application.template_business_account</field>
+            <field name="binding_model_id" ref="model_business_application"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

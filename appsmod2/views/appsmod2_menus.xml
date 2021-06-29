@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem
+        id="application_root_menu"
+        name = "Application"
+        sequence="1"
+        groups="appsmod2.group_appsmod2_loan_user,appsmod2.group_appsmod2_external_user" />
+
+        <menuitem
+        id="application_menu"
+        name="Application"
+        sequence="1"
+        parent="application_root_menu"
+        action="appsmod2.application_action"
+        />
+
+        <menuitem
+        id="application_config_menu"
+        name="Configuration"
+        sequence="10"
+        parent="application_root_menu"
+        groups="base.group_erp_manager,appsmod2.group_mortgage_product_user" />
+
+        <menuitem
+        id="mortgage_product_menu"
+        name="Mortgage Products"
+        sequence="2"
+        parent="application_config_menu"
+        groups="appsmod2.group_mortgage_product_user"
+        action="appsmod2.mortage_product_action"
+        />
+
+        <menuitem
+        id="application_checklist_menu"
+        name="Check List"
+        sequence="1"
+        parent="application_config_menu"
+        groups="base.group_erp_manager"
+        action="appsmod2.application_checklist_action"
+        />
+    </data>
+</odoo>

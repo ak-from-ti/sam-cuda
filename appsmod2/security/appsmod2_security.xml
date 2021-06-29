@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Category for Secure Application Management -->
+	    <record model="ir.module.category" id="module_category_appsmod2_loan_officer">
+	        <field name="name">Loan Officer</field>
+	        <field name="sequence">20</field>
+	    </record>
+	    
+	    <record model="ir.module.category" id="module_category_appsmod2_external">
+	        <field name="name">External</field>
+	        <field name="sequence">21</field>
+	    </record>
+
+        <!-- Roles available for Secure Application Management -->
+	    <record id="group_appsmod2_loan_user" model="res.groups">
+	        <field name="name">Officer - View Only</field>
+	        <field name="category_id" ref="module_category_appsmod2_loan_officer"/>
+	    </record>
+		
+		<record id="group_appsmod2_loan_officer" model="res.groups">
+	        <field name="name">Senior Officer</field>
+	        <field name="category_id" ref="module_category_appsmod2_loan_officer"/>
+	        <field name="implied_ids" eval="[(4, ref('group_appsmod2_loan_user'))]"/>
+	    </record>
+	    
+	    <record id="group_appsmod2_external_user" model="res.groups">
+	        <field name="name">Assessor</field>
+	        <field name="category_id" ref="module_category_appsmod2_external"/>
+	    </record>
+
+		<record id="group_mortgage_product_user" model="res.groups">
+	        <field name="name">Access Mortgage Product</field>
+	    </record>
+    </data>
+</odoo>

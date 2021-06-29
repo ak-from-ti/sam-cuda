@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate='1'>
+        <record id='ir_cron_lending_pack' model='ir.cron'>
+            <field name='name'>Lending Pack : Notify Cron</field>
+            <field name='model_id' ref='model_business_application'/>
+            <field name='state'>code</field>
+            <field name='code'>model._send_lending_pack_followup()</field>
+            <field name='interval_number'>15</field>
+            <field name='interval_type'>minutes</field>
+            <field name='numbercall'>-1</field>
+            <field name="doall" eval="True"/>
+            <field name="active" eval="True" />
+            <field name="user_id" ref="base.user_root" />
+        </record>
+
+
+        <record id='ir_cron_info_received_notify' model='ir.cron'>
+            <field name='name'>Info Received : Notify Cron</field>
+            <field name='model_id' ref='model_business_application'/>
+            <field name='state'>code</field>
+            <field name='code'>model._send_info_received_followup()</field>
+            <field name='interval_number'>15</field>
+            <field name='interval_type'>minutes</field>
+            <field name='numbercall'>-1</field>
+            <field name="doall" eval="True"/>
+            <field name="active" eval="True" />
+            <field name="user_id" ref="base.user_root" />
+        </record>
+
+    </data>
+</odoo>

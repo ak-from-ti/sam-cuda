@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_business_close" model="ir.ui.view">
+        <field name="name">Business.application.close</field>
+        <field name="model">business.application.close</field>
+        <field name="arch" type="xml">
+            <form string="Business Application Closing Reason">
+                <group>
+                    <field name='closing_reason'/>
+                    <!-- <field name='bussiness_application_id'/> -->
+                    <field name='reason_text' attrs="{'invisible': [('closing_reason', 'not in', ['other'])],'required': [('closing_reason', '=', 'other')]}" />
+                </group>
+                <footer>
+                    <button name="process" string="Close the Application" type="object" class="oe_highlight"/>
+                    <button string="_Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

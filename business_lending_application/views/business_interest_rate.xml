@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_business_interest_rate_tree" model="ir.ui.view">
+            <field name="name">business.interest.rate.tree</field>
+            <field name="model">business.interest.rate</field>
+            <field name="arch" type="xml">
+                <tree string="Business Interest Rate">
+                    <field name="name"/>
+                    <field name='active' />
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_interest_rate_view_form" model="ir.ui.view">
+            <field name="name">Business.interest.rate.Form</field>
+            <field name="model">business.interest.rate</field>
+            <field name="arch" type="xml">
+                <form string="Business Interest Rate">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name='name'/>
+                                <field name="active" widget="boolean_toggle"/>
+                                <field name='interest_rate'/>
+                                <field name='loan_term'/>
+                                <field name='repayment_frequency'/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <record id="business_interest_rate_action_customer" model="ir.actions.act_window">
+            <field name="name">Business Interest Rate</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">business.interest.rate</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref='view_business_interest_rate_tree'/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new Business Interest rate for your application.
+              </p>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

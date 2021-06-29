@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_business_application_tree" model="ir.ui.view">
+            <field name="name">business.application.tree</field>
+            <field name="model">business.application</field>
+            <field name="arch" type="xml">
+                <tree string="Business Borrower">
+                    <field name="name"/>
+                    <field name='business_borrower'/>
+                    <field name='state' widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_application_view_form" model="ir.ui.view">
+            <field name="name">Business.Application.Form</field>
+            <field name="model">business.application</field>
+            <field name="arch" type="xml">
+                <form string="Business Application">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button class="btn-primary" name="action_lending_pack" type="object" string="Lending Pack" attrs="{'invisible': [('state', 'not in', ['draft'])]}" />
+                        <button class="btn-primary" name="action_initial_meeting" type="object" string="Initial Meeting" attrs="{'invisible': [('state', 'not in', ['lending_sent'])]}" />
+                        <button class="btn-primary" name="action_info_received" type="object" string="Info Received" attrs="{'invisible': [('state', 'not in', ['internal_meet'])]}" />
+                        <button class="btn-primary" name="action_close" type="object" string="Close" attrs="{'invisible': [('state', 'not in', ['info_received'])]}" />
+                        <button class="btn-primary" name="action_finanical_account" type="object" string="Proceed" attrs="{'invisible': [('state', 'not in', ['info_received'])]}"/>
+                        <button name="%(business_lending_application.business_application_acknowledging_letter)d" string="Print Acknowledging Letter" type="action" class="btn-primary" attrs="{'invisible': [('state', 'not in', ['info_received'])]}" />
+                        <button class="btn-primary" name="action_cover_note" type="object" string="Cover Note"/>
+                        <button class="btn-primary" name="action_assign_assessor" type="object" string="Assign Assessor"/>
+                        <button class="btn-primary" name="action_approve" type="object" string="Approved"/>
+                    </header>
+                    <sheet>
+                        <field name='company_currency_id' invisible='1'/>
+                        <div class="oe_button_box" name="button_box"/>
+                        
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1" placeholder="Name"/>
+                            </h1>
+                        </div>
+                        <group name="application_header">
+                            <group name="partner_details">
+                                <field name="business_borrower" widget="res_partner_many2one" placeholder="Business Borrower Entity" domain="[('is_borrower', '=', True)]" context="{'form_view_ref': 'business_lending_application.business_borrower_view_form','default_is_borrower':True}" attrs="{'readonly': [('state', 'not in', ['draft'])]}" options='{"always_reload": True}'/>
+                            </group>
+                            <group>
+                                <field name='enquire_date'/>
+                            </group>
+                            
+                            <group>
+                                <field name='lending_date' attrs="{'invisible': [('state', 'not in', ['lending_sent'])]}" />
+                                <field name='is_lending_return' attrs="{'invisible': [('state', 'not in', ['lending_sent'])]}" widget='boolean_toggle'/>
+                            </group>
+                            <group>
+                                <field name='meeting_date' attrs="{'invisible': [('state', 'not in', ['internal_meet'])],'required': [('state', '=', 'internal_meet')]}" />
+                            </group>
+                            <group>
+                                <field name='info_received_date' attrs="{'invisible': [('state', 'not in', ['info_received'])]}" />
+                                <field name='acknowledgment_letter_send'  attrs="{'invisible': [('state', 'not in', ['info_received'])]}" widget='boolean_toggle'/>
+                            </group>
+                            <group>
+                                <field name='assessor_id'/>
+                                <field name='decision_group_id'/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Business Borrower" name="business_borrower">
+                                <group>
+                                    <group>
+                                        <field name='entity' />
+                                        <field name='contact_person' />
+                                        <field name='business_sector' />
+                                        <field name='business_year' />
+                                        <field name='business_premises' />
+                                        <field name='company_reg_no' />
+                                        <field name='solicitor_details' />
+                                    </group>
+                                    <group>
+                                        <field name='no_employees' />
+                                        <field name='member_number' />
+                                        <field name='main_branch' />
+                                        <field name='accountant_details' />
+                                        <field name='tax_confirmation' />
+                                        <field name='business_drawing'/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string='Business Relationship' name='business_relationship' attrs="{'readonly': [('state', 'not in', ('draft'))]}">
+                                <field name='business_relationship' domain="[('is_relationship','=',True),('business_borrower','=',business_borrower)]" context="{'tree_view_ref':'business_lending_application.view_business_relationship_tree','default_is_relationship':True}">
+                                    <form>
+                                        <div class="oe_title">
+                                            <field name="is_company" invisible="1"/>
+                                            <field name="parent_id" invisible="1"/>
+                                            <field name="active" invisible="1"/>
+                                            <h1>
+                                                <field name="name" default_focus="1" placeholder="Name"/>
+                                            </h1>
+                                            <div class="o_row">
+                                                <field name="business_borrower" context="{'form_view_ref': 'business_lending_application.business_borrower_view_form'}" widget="res_partner_many2one" placeholder="Business Entity" domain="[('is_borrower', '=', True)]" />
+                                            </div>
+                                        </div>
+                                        <group>
+                                            <group>
+                                                <field name='nature_of_business'/>
+                                                <field name='martial_status'/>
+                                                <field name='home_owner'/>
+                                                <field name='dob'/>
+                                                <field name='date_joined'/>
+                                                <field name='dependent_children'/>
+                                            </group>
+                                            <group>
+                                                <field name='account_number'/>
+                                                <field name='employment_status'/>
+                                                <field name='employment_year'/>
+                                                <field name='experience_year'/>
+                                                <field name='salary'/>
+                                                <field name='member_number'/>
+                                            </group>
+                                        </group>
+                                        <notebook colspan="4">
+                                            <page string="General Information" name="general_info">
+                                                <group>
+                                                    <group>
+                                                        <field name="type" groups="base.group_no_one" invisible="1"/>
+                                                        <span class="o_form_label o_td_label" name="address_name">
+                                                            <b>Address</b>
+                                                        </span>
+                                                        
+                                                        <div class="o_address_format">
+                                                            <field name="street" placeholder="Street..." class="o_address_street"
+                                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                                            <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                                            <field name="city" placeholder="City" class="o_address_city"
+                                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                                            <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}"
+                                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                                            <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                                            <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'
+                                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                                        </div>
+                                                        
+                                                    </group>
+                                                    <group>
+                                                        
+                                                        <field name="phone" widget="phone"/>
+                                                        <field name="mobile" widget="phone"/>
+                                                        <field name="user_ids" invisible="1"/>
+                                                        <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
+                                                        
+                                                    
+                                                        <field name="active_lang_count" invisible="1"/>
+                                                        <label for="lang" attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}"/>
+                                                        <div class="o_row" attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}">
+                                                            <field name="lang"/>
+                                                            <button
+                                                                type="action"
+                                                                name="%(base.res_lang_act_window)d"
+                                                                class="btn-sm btn-link mb4 fa fa-globe"
+                                                                aria-label="More languages"
+                                                                groups="base.group_system"
+                                                                title="More languages"
+                                                            />
+                                                        </div>
+                                                    </group>
+                                                </group>
+                                            </page>
+                                        </notebook>
+                                    </form>
+                                    <tree
+                                        string="Business Relationship lines"
+                                    >   
+                                        <control>
+                                            <create name="add_relationship_control" string="Add a Business Relationship"/>
+                                        </control>
+                                        <field name='name'/>
+                                        <field name='nature_of_business'/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string='Loan Details' name='loan_details'>
+                                <group>
+                                    <group>
+                                        <field name='loan_amount'/>
+                                        <field name='interest_rate'/>
+                                        <field name='loan_term'/>
+                                        <field name='repayment_frequency'/>
+                                    </group>
+                                    <group>
+                                        <field name='repayment_amount' widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                                        <field name='stressed_repayment' widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                                        <field name='start_date'/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string='Business Summary' name='business_summary' attrs="{'invisible': [('state', 'not in', ['internal_meet','info_received','close','financial_account'])]}">
+                                <notebook colspan="4">
+                                    <page string='Borrower Summary' name='borrower_summary'>
+                                        <group name="business_asset_group" string="Borrower Summary">
+                                        </group>
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr class='text-center'>
+                                                    <th></th>
+                                                    <th>Balance</th>
+                                                    <th>Limit</th>
+                                                    <th>Repayment</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            New Loan
+                                                        </b>
+                                                    </td>
+                                                    <td>
+                                                        <field name='new_loan_Balance'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='new_loan_limit'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='new_loan_repayment'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Existing Loans
+                                                        </b>
+                                                    </td>
+                                                    <td>
+                                                        <field name='existing_loans_Balance'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='existing_loans_limit'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='existing_loans_repayment'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Non Credit Union
+                                                        </b>
+                                                    </td>
+                                                    <td>
+                                                        <field name='non_credit_union_Balance'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='non_credit_union_limit'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='non_credit_union_repayment'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Connected
+                                                        </b>
+                                                    </td>
+                                                    <td>
+                                                        <field name='connected_Balance'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='connected_limit'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='connected_repayment'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Guarantors
+                                                        </b>
+                                                    </td>
+                                                    <td>
+                                                        <field name='guarantors_Balance'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='guarantors_limit'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='guarantors_repayment'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Totals
+                                                        </b>
+                                                    </td>
+                                                    <td>
+                                                        <field name='total_Balance'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='total_limit'/>
+                                                    </td>
+                                                    <td>
+                                                        <field name='total_repayment'/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </page>
+                                    <page string='Business Assets' name='business_assets'>
+                                        <group name="business_asset_group" string="Business Assets">
+                                            <div class="d-flex">
+                                                <button class="btn btn-primary" style="margin: 10px 0;" type="object" name="copy_assets" string="Copy Assets"/>
+                                            </div>
+                                        </group>
+                                        <field name="business_asset_ids" context="{'default_business_borrower': business_borrower}">
+                                            <tree
+                                                string="Business Assets lines"
+                                            >   
+                                                <control>
+                                                    <create name="add_business_assets_control" string="Add Business Assets"/>
+                                                </control>
+                                                <field name='business_borrower'/>
+                                                <field name='name'/>
+                                                <field name='liability'/>
+                                                <field name='financial_institute'/>
+                                                <field name='repayment'/>
+                                                <field name='term'/>
+                                                <field name='income'/>
+                                                <field name='value'/>
+                                            </tree>
+                                            <form string="Business Assets">
+                                                <sheet>
+                                                    <group>
+                                                        <group>
+                                                            <field name='name'/>
+                                                            <field name="business_borrower" context="{'form_view_ref': 'business_lending_application.business_borrower_view_form'}" domain="[('business_borrower', '=', business_borrower),('is_borrower', '=', True)]"/>
+                                                            <field name='liability'/>
+                                                            <field name='financial_institute'/>
+                                                        </group>
+                                                        <group>
+                                                            <field name='repayment'/>
+                                                            <field name='term'/>
+                                                            <field name='income'/>
+                                                            <field name='value'/>
+                                                        </group>
+                                                    </group>
+                                                </sheet>
+                                            </form>
+                                        </field>
+                                    </page>
+                                    <page string='Funding Summary' name='funding_summary'>
+                                        <group>
+                                            <group>
+                                                <table class="table table-hover table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <b>
+                                                                    Costs of Property
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <field name='cost_property'/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b>
+                                                                    Legal Fees
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <field name='legal_fees'/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b>
+                                                                    Stamp Duty
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <field name='stamp_duty'/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b>
+                                                                    Other
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <field name='other_costs'/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b>
+                                                                    Total Costs
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <field name='total_costs'/>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </group>
+                                            <group>
+                                                <table class="table table-hover table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <b>
+                                                                    Loan
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <field name='loan'/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b>
+                                                                    Own Funds
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <field name='own_funds'/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b>
+                                                                    Gift
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <field name='gift'/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b>
+                                                                    Other
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <field name='other_funding'/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b>
+                                                                    Total Funding
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <field name='total_funding'/>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </group>
+                                        </group>
+                                    </page>
+                                    <page string='Other Summary' name='other_summary'>
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr class='text-center'>
+                                                    <th>Category</th>
+                                                    <th>Text</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <b>
+                                                            Profile of borrower
+                                                        </b>
+                                                    </td>
+                                                    <!-- <td>
+                                                        <field name='profile_borrower'/>
+                                                    </td> -->
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Background/length of time in business
+                                                    </td>
+                                                    <td>
+                                                        <field name='background_business'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Qualifications/Experience
+                                                    </td>
+                                                    <td>
+                                                        <field name='qualication_experience'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Make Reference to connections
+                                                    </td>
+                                                    <td>
+                                                        <field name='reference_connection'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        How Long borrower is a member?
+                                                    </td>
+                                                    <td>
+                                                        <field name='long_borrower'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <b>
+                                                            Proposal
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Amount sought for which purpose.
+                                                    </td>
+                                                    <td>
+                                                        <field name='amount_purpose'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        illustration of loan,including term.
+                                                    </td>
+                                                    <td>
+                                                        <field name='illustration_loan'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Total connected borrowing.
+                                                    </td>
+                                                    <td>
+                                                        <field name='connected_borrowing'/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </page>
+                                    <page string='Exceptions to policy' name='exception_policy'>
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr class='text-center'>
+                                                    <th>Highlight Exceptions to policy</th>
+                                                    <th>Y/N</th>
+                                                    <th>Rationale/Mitigants</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.1: Financial Information
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_1_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                     <td attrs="{'invisible': [('rule_1_boolean', '=', False)]}">
+                                                        <field name='rule_1_text' attrs="{'required': [('rule_1_boolean','=', True)]}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.2: Tax
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_2_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                    <td attrs="{'invisible': [('rule_2_boolean', '=', False)]}">
+                                                        <field name='rule_2_text' attrs="{'required': [('rule_2_boolean','=', True)]}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.3: Repayment Capacity
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_3_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                    <td attrs="{'invisible': [('rule_3_boolean', '=', False)]}">
+                                                        <field name='rule_3_text' attrs="{'required': [('rule_3_boolean','=', True)]}" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.4: Stress Testing
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_4_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                    <td attrs="{'invisible': [('rule_4_boolean', '=', False)]}">
+                                                        <field name='rule_4_text' attrs="{'required': [('rule_4_boolean','=', True)]}" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.5: Credit Check
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_5_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                    <td attrs="{'invisible': [('rule_5_boolean', '=', False)]}">
+                                                        <field name='rule_5_text' attrs="{'required': [('rule_5_boolean','=', True)]}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.6: Experience
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_6_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                    <td attrs="{'invisible': [('rule_6_boolean', '=', False)]}">
+                                                        <field name='rule_6_text' attrs="{'required': [('rule_6_boolean','=', True)]}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.7: Term
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_7_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                    <td attrs="{'invisible': [('rule_7_boolean', '=', False)]}">
+                                                        <field name='rule_7_text' attrs="{'required': [('rule_7_boolean','=', True)]}" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.8: To Purchase &amp; refurbish/extend a business premises for own use
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_8_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                    <td attrs="{'invisible': [('rule_8_boolean', '=', False)]}">
+                                                        <field name='rule_8_text' attrs="{'required': [('rule_8_boolean','=', True)]}" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.9: Security
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_9_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                    <td attrs="{'invisible': [('rule_9_boolean', '=', False)]}">
+                                                        <field name='rule_9_text' attrs="{'required': [('rule_9_boolean','=', True)]}" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.10: Status of Member
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_10_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                    <td attrs="{'invisible': [('rule_10_boolean', '=', False)]}">
+                                                        <field name='rule_10_text' attrs="{'required': [('rule_10_boolean','=', True)]}" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Rule No.11: Conditions/Covenants
+                                                    </td>
+                                                    <td class='text-center'>
+                                                        <field name='rule_11_boolean' widget='boolean_toggle'/>
+                                                    </td>
+                                                    <td attrs="{'invisible': [('rule_11_boolean', '=', False)]}">   
+                                                        <field name='rule_11_text' attrs="{'required': [('rule_11_boolean','=', True)]}" />
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </page>
+                                </notebook>
+                            </page>
+                            
+                            <page string='Checklist' name='Checklist' attrs="{'invisible': [('state', 'not in', ['due_diligence','financial_account','close'])]}">
+                                <group name="business_checklist" string="Checklist">
+                                </group>
+                                <field name="application_checklist_ids" context="{'default_business_application_id': id}">
+                                    <tree
+                                        string="Business Checklist"
+                                        editable="bottom"
+                                    >   
+                                        <control>
+                                            <create name="add_business_checklist" string="Add Checklist"/>
+                                        </control>
+                                        <field name='checklist_id'/>
+                                        <field name='checklist_type'/>
+                                        <field name='checklist_satisfactory' widget='boolean_toggle'/>
+                                        <field name='checklist_comment' attrs="{'invisible': [('checklist_satisfactory', '=', False)],'required': [('checklist_satisfactory','=', True)]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string='Accounting Data' name='accounting_date' attrs="{'invisible': [('state', 'not in', ['financial_account','close'])]}">
+                                <group name="business_account_group" string="Business Account">
+                                    <div class="d-flex">
+                                        <button class="btn btn-primary" style="margin: 10px 0;" type="object" name="copy_business_account" string="Copy Business Account Record"/>
+
+                                        <button class="btn btn-primary" style="margin: 10px 10px;" type="object" name="print_financial_account" string="Print Financial Account"/>
+                                    </div>
+                                    
+                                </group>
+                                <field name='business_account_ids'>
+                                    <tree
+                                        string="Business Account"
+                                    >   
+                                        <control>
+                                            <create name="add_business_account" string="Add Account"/>
+                                        </control>
+                                        <field name='period_end'/>
+                                        <field name='total_current_assets'/>
+                                        <field name='total_current_liabilities' />
+                                        <field name='net_assets_liabilities' />
+                                        <field name='total_fixed_assets' />
+                                        <field name='total_capital_employed' />
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page name="document_upload" string="Document Upload">
+                                <group>
+                                    <group name="uploaded_business_document" string="Business Related Document">
+                                        <field name="uploaded_business_document" nolabel="1">
+                                            <form>
+                                                <group>
+                                                    <field name='name'/>
+                                                    <field name='data_file' filename="data_file_name"/>
+                                                    <field name="data_file_name" invisible="1"/>
+                                                    <field name='document_type'/>
+                                                    <field name='document_info' attrs="{'required': [('document_type','=', 'other')]}"/>
+                                                </group>
+                                            </form>
+                                            <tree>
+                                                <field name='name'/>
+                                                <field name='document_type'/>
+                                                <!-- <button name="action_show_document" string="View" type="object" class="btn-primary"/> -->
+                                            </tree>
+                                        </field>
+                                    </group>
+                                    <group name="uploaded_relationship_document" string="Relationship Related Document">
+                                        <field name="uploaded_relationship_document"  nolabel="1">
+                                            <form>
+                                                <group>
+                                                    <field name='name'/>
+                                                    <field name='data_file' filename="data_file_name"/>
+                                                    <field name="data_file_name" invisible="1"/>
+                                                    <field name='business_relationship_id' context="{'tree_view_ref':'business_lending_application.view_business_relationship_tree','form_view_ref':'business_lending_application.business_relationship_view_form','default_is_relationship':True}" domain="[('is_relationship','=',True)]"/>
+                                                    <field name='document_type'/>
+                                                    <field name='document_info' attrs="{'required': [('document_type','=', 'other')]}"/>
+                                                </group>
+                                            </form>
+                                             <tree>
+                                                <field name='name'/>
+                                                <field name='document_type'/>
+                                                <field name='business_relationship_id'/>
+                                                <!-- <button name="action_show_document" string="View" type="object" class="btn-primary"/> -->
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page name="cover_note" string="Cover Note">
+                                <group name='cover_note' string='Cover Note'>
+                                    <field name='assessor_cover_note' nolabel="1" placeholder="Cover Note for the business application"/>
+                                </group>
+                            </page>
+
+                            <page name="decision_note" string="Decision Note">
+                                <group name='decision_note' string='Decision Note'>
+                                    <field name='decision_cover_note' nolabel="1" placeholder="Decision Note for the business application"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="business_application_action_customer" model="ir.actions.act_window">
+            <field name="name">Business Application</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">business.application</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref='view_business_application_tree'/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new Business Lending application.
+              </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

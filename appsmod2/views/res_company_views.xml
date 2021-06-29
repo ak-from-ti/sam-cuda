@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Adds the fields on the Company's Form -->
+
+        <record id="appsmod2_company_view_form_inherit" model="ir.ui.view">
+            <field name="name">appsmod2.company.view.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="application" string="Application">
+                        <group>
+                            <field name="interest_rate" invisible="1"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="lti"/>
+                                <field name="ltv"/>
+                                <field name="mortgage_service_ratio"/>
+                                <field name="debt_service_ratio"/>
+                                <field name="gift_to_deposit"/>
+                            </group>
+                            <group>
+                                <field name="monthly_income_reduced"/>
+                                <field name="interest_rate_increase" />
+                                <field name="stressed_mortgage_service_ratio"/>
+                                <field name="stressed_debt_service_ratio" />
+                            </group>
+                        </group>
+                    </page>
+
+                    <page name="mortgage_product" string="Mortgage Product">
+                        <br/>
+                        <label for="mortgage_product_ids"/>
+                        <br/>
+                        <field name="mortgage_product_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="mortgage_type"/>
+                                <field name="fixed_interest_rate"/>
+                                <field name="variable_interest_rate"/>
+                                <field name="fixed_term"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="mortgage_type"/>
+                                    </group>
+                                    <group>
+                                        <field name="fixed_interest_rate"/>
+                                        <field name="variable_interest_rate"/>
+                                        <field name="fixed_term"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

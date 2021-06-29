@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="application_view_tree" model="ir.ui.view">
+            <field name="name">application.view.tree</field>
+            <field name="model">application</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                    <field name="assignee"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="application_view_form" model="ir.ui.view">
+            <field name="name">application.view.form</field>
+            <field name="model">application</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="load_checklist_items" string="Limits Eligible" type="object" groups="appsmod2.group_appsmod2_loan_officer" class="btn-primary" />
+                        <button name="action_decline" string="Decline" type="object" groups="appsmod2.group_appsmod2_loan_officer" />
+                        <button name="action_limits_not_eligible" string="Limits Not Eligible" type="object" group="appsmod2.group_appsmod2_loan_officer" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,limits_eligible,pre_application_complete,application_requested"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="first_time_buyer"/>
+                                <field name="mortgage_product_id"/>
+                                <field name="mortgage_type"/>
+                                <field name="assignee" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="mortgrage_term_year"/>
+                                <field name="mortgrage_term_months"/>
+                                <field name="mortgage_amount"/>
+                                <field name="property_value"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="applicant_1"/>
+                                <field name="applicant_1_age" string="Age"/>
+                                <field name="applicant_1_age_end_of_term" string="Age: End of Term"/>
+                                <field name="self_employed_1" string="Self Employed?"/>
+                                <field name="single"/>
+                                <field name="no_of_dependents"/>
+                                <field name="ndi_monthly"/>
+                            </group>
+                            <group>
+                                <field name="applicant_2"/>
+                                <field name="applicant_2_age" string="Age"/>
+                                <field name="applicant_2_age_end_of_term" string="Age: End of Term"/>
+                                <field name="self_employed_2" string="Self Employed?"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="total_basic_income_1" string="Total Basic Income"/>
+                                <field name="total_net_basic_income_1" string="Total Net Basic Income"/>
+                                <field name="total_other_income_1" string="Total Other Net Income"/>
+                                <field name="total_income"/>
+                                <field name="other_income_counted"/>
+                                <field name="nd2_income_counted"/>
+                                <field name="total_sustainable_income"/>
+                                <field name="allowable_monthly_income"/>
+                            </group>
+                            <group>
+                                <field name="total_basic_income_2" string="Total Basic Income"/>
+                                <field name="total_net_basic_income_2" string="Total Net Basic Income"/>
+                                <field name="total_other_income_2" string="Total Other Net Income"/>
+                            </group>
+                        </group>
+                        <group string="Underwritting Metrics">
+                            <group>
+                                <field name="loan_to_value"/>
+                                <field name="show_image_1"/>
+                                <field name="image_red_1" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_red_1'}" attrs="{'invisible': [('show_image_1', '=', True)]}"/>
+                                <field name="image_green_1" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_green_1'}" attrs="{'invisible': [('show_image_1', '=', False)]}"/>
+                                <field name="loan_to_income_ratio"/>
+                                <field name="show_image_2"/>
+                                <field name="image_red_2" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_red_2'}" attrs="{'invisible': [('show_image_2', '=', True)]}"/>
+                                <field name="image_green_2" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_green_2'}" attrs="{'invisible': [('show_image_2', '=', False)]}"/>
+                                <field name="mortgage_service_ratio"/>
+                                <field name="show_image_3"/>
+                                <field name="image_red_3" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_red_3'}" attrs="{'invisible': [('show_image_3', '=', True)]}"/>
+                                <field name="image_green_3" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_green_3'}" attrs="{'invisible': [('show_image_3', '=', False)]}"/>
+                                <field name="total_debt_service_ratio"/>
+                                <field name="show_image_4"/>
+                                <field name="image_red_4" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_red_4'}" attrs="{'invisible': [('show_image_4', '=', True)]}"/>
+                                <field name="image_green_4" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_green_4'}" attrs="{'invisible': [('show_image_4', '=', False)]}"/>
+                                <field name="gift_to_deposit"/>
+                                <field name="show_image_5"/>
+                                <field name="image_red_5" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_red_5'}" attrs="{'invisible': [('show_image_5', '=', True)]}"/>
+                                <field name="image_green_5" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_green_5'}" attrs="{'invisible': [('show_image_5', '=', False)]}"/>
+                            </group>
+                            <group string="ESIS">
+                                <field name="esis_no_of_repayment"/>
+                                <field name="esis_total_repaid"/>
+                                <field name="esis_cost_of_credit"/>
+                                <field name="esis_cost_per_1"/>
+                                <field name="esis_interest_rate"/>
+                                <field name="esis_monthly_repayment_1"/>
+                                <field name="esis_monthly_repayment_2"/>
+                                <field name="esis_weekly_repayment"/>
+                                <field name="esis_weekly_repayment_1"/>
+                                <field name="esis_weekly_repayment_2"/>
+                                <field name="esis_fortnightly_repayment"/>
+                                <field name="esis_fortnightly_repayment_1"/>
+                                <field name="esis_fortnightly_repayment_2"/>
+                                <field name="avg_repayment"/>
+                                <field name="avg_repayment_plus1"/>
+                                <field name="avg_rate"/>
+                                <field name="esis_aprc"/>
+                                <field name="esis_aprc_1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="net_disposable_inc"/>
+                                <field name="max_lend_facility"/>
+                                <field name="monthly_repayment"/>
+                                <field name="max_possible_repayment"/>
+                                <field name="gifts_towards_deposit"/>
+                                <field name="values_of_gifts"/>
+                                <field name="gifts_letter_received"/>
+                                <field name="contribution_to_valuation"/>
+                                <field name="contribution_to_revaluation"/>
+                                <field name="once_off_costs"/>
+                            </group>
+                            <group string="Repayments">
+                                <field name="esis_payment_frequency"/>
+                                <field name="monthly_repayment" string="Regular Repayment" />
+                                <field name="esis_weekly_repayment" string="Regular Repayment(Weekly)"/>
+                                <field name="esis_fortnightly_repayment" string="Regular Repayment(Fortnightly)"/>
+                                <field name="fixed_term_payment" string="Repayment At Fixed Term"/>
+                                <field name="term_at_starting_rate" string="Term At Fixed Rate"/>
+                                <field name="interest_rate"/>
+                                <field name="fixed_interest_rate"/>
+                                <field name="repayment_at_variable" string="Repayment At Variable"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Stress Test">
+                                <field name="monthly_income_reduced" />
+                                <field name="interest_rate_increase"/>
+                                <field name="stressed_income"/>
+                                <field name="stressed_allowable_income"/>
+                                <field name="stressed_monthly_repayment"/>
+                                <field name="stressed_mortgage_service_ratio" />
+                                <field name="show_image_8"/>
+                                <field name="image_red_8" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_red_8'}" attrs="{'invisible': [('show_image_8', '=', True)]}"/>
+                                <field name="image_green_8" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_green_8'}" attrs="{'invisible': [('show_image_8', '=', False)]}"/>
+                                <field name="stressed_total_debt_service_ratio" />
+                                <field name="show_image_9"/>
+                                <field name="image_red_9" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_red_9'}" attrs="{'invisible': [('show_image_9', '=', True)]}"/>
+                                <field name="image_green_9" widget="signature" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_green_9'}" attrs="{'invisible': [('show_image_9', '=', False)]}"/>
+                                <field name="stressed_net_disposable_income"/>
+                            </group>
+                            <group>
+                                <field name="fixed_term_payment"/>
+                                <field name="repayment_at_variable"/>
+                                <field name="repayment_at_variable_plus1"/>
+                                <field name="repayment_at_variable_plus2"/>
+                                <field name="max_possible_repayment"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="applicant_1_p60" string="P60 Income For Last Year"/>
+                                <field name="applicant_1_ann_pen" string="Annual Pension Contribution"/>
+                                <field name="applicant_1_exi_mor" string="Existing Mortgage Commitments"/>
+                                <field name="applicant_1_rental_income" string="Rental Income"/>
+                                <field name="debt_repay"/>
+                                <field name="property_co"/>
+                                <field name="childcare"/>
+                                <field name="maintenance"/>
+                                <field name="total_short_term"/>
+                            </group>
+                            <group>
+                                <field name="applicant_2_p60" string="P60 Income For Last Year"/>
+                                <field name="applicant_2_ann_pen" string="Annual Pension Contribution"/>
+                                <field name="applicant_2_exi_mor" string="Existing Mortgage Commitments"/>
+                                <field name="applicant_2_rental_income" string="Rental Income"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Decline Letter">
+                                <group>
+                                    <field name="decline_reason" readonly="1"/>
+                                    <field name="decline_message" readonly="1"/>
+                                </group>
+                            </page>
+                            <page string="Assessment">
+                                <group>
+                                    <group string="Applicant 1">
+                                        <span class="o_form_label">Hover your mouse over the question to see the help text."</span>
+                                        <field name="character_demonstrated" string="Is Character Demonstrated?"/>
+                                        <field name="affordability_established" string="Is Affordability Established?" />
+                                        <field name="secure_employement" string="Secure Employment?"/>
+                                        <field name="certified_value"/>
+                                        <field name="certified_property_value"/>
+                                    </group>
+                                    <group string="Applicant 2">
+                                        <span class="o_form_label">Hover your mouse over the question to see the help text."</span>
+                                        <field name="character_demonstrated_applicant_2" string="Is Character Demonstrated?"/>
+                                        <field name="affordability_established_applicant_2" string="Is Affordability Established?" />
+                                        <field name="secure_employement_applicant_2" string="Secure Employment?"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Special Conditions">
+                                <field name="body_special_conditions" widget="html" />
+                            </page>
+                            <page string="Cover Note">
+                                <field name="body_html" widget="html" />
+                            </page>
+                            <page string="Check List">
+                                <group string="Jointly Applicable">
+                                    <field name="jointly_applicable_line" nolabel="1">
+                                        <tree editable="bottom" create="0" delete="0">
+                                            <field name="name" readonly="1"/>
+                                            <field name="provided" />
+                                            <field name="acceptable" />
+                                            <field name="notes" />
+                                            <field name="application_id" invisible="1"/>
+                                            <field name="sequence" invisible="1"/>
+                                        </tree>
+                                        <form>
+                        					<field name="name" readonly="1" string="Name"/>
+                        					<group>
+                        						<group>
+                        							<field name="provided" />
+                        							<field name="acceptable" />
+                        						</group>
+                        						<group>
+                        							<field name="notes" />
+                        						</group>
+                        					</group>
+                        				</form>
+                                    </field>
+                                </group>
+                                <group string="Applicable Individually">
+                                    <group string="Applicant 1">
+                                        <field name="applicant_1_credit_risk" string="Are Credit Checks Acceptable?" />
+                                    </group>
+                                    <group string="Applicant 2">
+                                        <field name="applicant_2_credit_risk" string="Are Credit Checks Acceptable?" />
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="checklist_applicable_applicant1_line" nolabel="1">
+                                            <tree editable="bottom" create="0" delete="0">
+                                                <field name="name" readonly="1"/>
+                                                <field name="provided" />
+                                                <field name="acceptable" />
+                                                <field name="notes"/>
+                                                <field name="sequence" invisible="1"/>
+                                            </tree>
+                                            <form>
+	                        					<field name="name" readonly="1" string="Name"/>
+	                        					<group>
+	                        						<group>
+	                        							<field name="provided" />
+	                        							<field name="acceptable" />
+	                        						</group>
+	                        						<group>
+	                        							<field name="notes" />
+	                        						</group>
+	                        					</group>
+	                        				</form>
+                                        </field>
+                                    </group>
+                                    <group>
+                                        <field name="checklist_applicable_applicant2_line" nolabel="1">
+                                            <tree editable="bottom" create="0" delete="0">
+                                                <field name="name" readonly="1"/>
+                                                <field name="provided" />
+                                                <field name="acceptable" />
+                                                <field name="notes"/>
+                                                <field name="sequence" invisible="1"/>
+                                            </tree>
+                                            <form>
+	                        					<field name="name" readonly="1" string="Name"/>
+	                        					<group>
+	                        						<group>
+	                        							<field name="provided" />
+	                        							<field name="acceptable" />
+	                        						</group>
+	                        						<group>
+	                        							<field name="notes" />
+	                        						</group>
+	                        					</group>
+	                        				</form>
+                                        </field>
+                                    </group>
+                                </group>
+                                <group string="Self Employed" >
+                                    <group string="Applicant 1">
+                                        <field name="checklist_self_applicable_applicant1_line" nolabel="1">
+                                            <tree editable="bottom" create="0" delete="0">
+                                                <field name="name" readonly="1"/>
+                                                <field name="provided" />
+                                                <field name="acceptable" />
+                                                <field name="notes"/>
+                                                <field name="sequence" />
+                                            </tree>
+                                            <form>
+	                        					<field name="name" readonly="1" string="Name"/>
+	                        					<group>
+	                        						<group>
+	                        							<field name="provided" />
+	                        							<field name="acceptable" />
+	                        						</group>
+	                        						<group>
+	                        							<field name="notes" />
+	                        						</group>
+	                        					</group>
+	                        				</form>
+                                        </field>
+                                    </group>
+                                    <group string="Applicant 2">
+                                        <field name="checklist_self_applicable_applicant2_line" nolabel="1">
+                                            <tree editable="bottom" create="0" delete="0">
+                                                <field name="name" readonly="1"/>
+                                                <field name="provided" />
+                                                <field name="acceptable" />
+                                                <field name="notes"/>
+                                                <field name="sequence" />
+                                            </tree>
+                                            <form>
+	                        					<field name="name" readonly="1" string="Name"/>
+	                        					<group>
+	                        						<group>
+	                        							<field name="provided" />
+	                        							<field name="acceptable" />
+	                        						</group>
+	                        						<group>
+	                        							<field name="notes" />
+	                        						</group>
+	                        					</group>
+	                        				</form>
+                                        </field>
+                                    </group>
+                                </group>
+                                <group string="Paye">
+                                    <group string="Applicant 1">
+                                        <field name="checklist_paye_applicable_applicant1_line" nolabel="1">
+                                            <tree editable="bottom" create="0" delete="0">
+                                                <field name="name" readonly="1"/>
+                                                <field name="provided" />
+                                                <field name="acceptable" />
+                                                <field name="notes"/>
+                                                <field name="sequence" invisible="1"/>
+                                            </tree>
+                                            <form>
+	                        					<field name="name" readonly="1" string="Name"/>
+	                        					<group>
+	                        						<group>
+	                        							<field name="provided" />
+	                        							<field name="acceptable" />
+	                        						</group>
+	                        						<group>
+	                        							<field name="notes" />
+	                        						</group>
+	                        					</group>
+	                        				</form>
+                                        </field>
+                                    </group>
+                                    <group string="Applicant 2">
+                                        <field name="checklist_paye_applicable_applicant2_line" nolabel="1">
+                                            <tree editable="bottom" create="0" delete="0">
+                                                <field name="name" readonly="1"/>
+                                                <field name="provided" />
+                                                <field name="acceptable" />
+                                                <field name="notes"/>
+                                                <field name="sequence" invisible="1"/>
+                                            </tree>
+                                            <form>
+	                        					<field name="name" readonly="1" string="Name"/>
+	                        					<group>
+	                        						<group>
+	                        							<field name="provided" />
+	                        							<field name="acceptable" />
+	                        						</group>
+	                        						<group>
+	                        							<field name="notes" />
+	                        						</group>
+	                        					</group>
+	                        				</form>
+                                        </field>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="MRY Details">
+                                <group string="Applicant 1">
+                                </group>
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr class='text-center'>
+                                            <th></th>
+                                            <th>MRY</th>
+                                            <th>MRY-1</th>
+                                            <th>MRY-2</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>Net Profit</th>
+                                            <td class="text-center">
+                                                <field name="applicant_1_net_profit_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_1_net_profit_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_1_net_profit_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Plus Depreceation</th>
+                                            <td class="text-center">
+                                                <field name="applicant_1_plus_depreceation_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_1_plus_depreceation_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_1_plus_depreceation_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Plus Interest Paid</th>
+                                            <td class="text-center">
+                                                <field name="applicant_1_plus_interest_paid_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_1_plus_interest_paid_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_1_plus_interest_paid_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Plus Remuneration</th>
+                                            <td class="text-center">
+                                                <field name="applicant_1_plus_remuneration_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_1_plus_remuneration_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_1_plus_remuneration_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Plus Pension</th>
+                                            <td class="text-center">
+                                                <field name="applicant_1_plus_pension_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_1_plus_pension_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_1_plus_pension_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Trading Profit</th>
+                                            <td class="text-center">
+                                                <field name="applicant_1_trading_profit_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_1_trading_profit_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_1_trading_profit_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <group>
+                                    <group>
+                                        <table class="table table-hover">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Average Trading Profit</th>
+                                                    <td>
+                                                        <field name="applicant_1_average_trading_profit" nolabel="1"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Less Business Reoayments</th>
+                                                    <td>
+                                                        <field name="applicant_1_less_business_repayments" nolabel="1"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Surplus</th>
+                                                    <td>
+                                                        <field name="applicant_1_surplus" nolabel="1"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </group>
+                                </group>
+                                <group string="Applicant 2">
+                                </group>
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr class='text-center'>
+                                            <th></th>
+                                            <th>MRY</th>
+                                            <th>MRY-1</th>
+                                            <th>MRY-2</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>Net Profit</th>
+                                            <td class="text-center">
+                                                <field name="applicant_2_net_profit_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_2_net_profit_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_2_net_profit_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Plus Depreceation</th>
+                                            <td class="text-center">
+                                                <field name="applicant_2_plus_depreceation_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_2_plus_depreceation_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_2_plus_depreceation_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Plus Interest Paid</th>
+                                            <td class="text-center">
+                                                <field name="applicant_2_plus_interest_paid_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_2_plus_interest_paid_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_2_plus_interest_paid_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Plus Remuneration</th>
+                                            <td class="text-center">
+                                                <field name="applicant_2_plus_remuneration_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_2_plus_remuneration_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_2_plus_remuneration_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Plus Pension</th>
+                                            <td class="text-center">
+                                                <field name="applicant_2_plus_pension_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_2_plus_pension_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_2_plus_pension_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Trading Profit</th>
+                                            <td class="text-center">
+                                                <field name="applicant_2_trading_profit_1" nolabel="1" />
+                                            </td>
+                                            <td class='text-center'>
+                                                <field name="applicant_2_trading_profit_2" nolabel="1"/>
+                                            </td>
+                                            <td >
+                                                <field name="applicant_2_trading_profit_3" nolabel="1" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <group>
+                                    <group>
+                                        <table class="table table-hover">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Average Trading Profit</th>
+                                                    <td>
+                                                        <field name="applicant_2_average_trading_profit" nolabel="1"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Less Business Reoayments</th>
+                                                    <td>
+                                                        <field name="applicant_2_less_business_repayments" nolabel="1"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Surplus</th>
+                                                    <td>
+                                                        <field name="applicant_2_surplus" nolabel="1"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Documents">
+                                <group string="Jointly Applicable">
+                                    <field name="documents_uniquely_applicable_line" nolabel="1">
+                                        <tree editable="bottom" create="1">
+                                            <field name="name"/>
+                                            <field name="data_file" filename="data_file_name"/>
+                                            <field name="data_file_name" invisible="1"/>
+                                            <button name="action_show_document" string="View" type="object" class="btn-primary"/>
+                                        </tree>
+                                        <form>
+	                        				<group>
+	                        					<group>
+	                        						<field name="name" />
+	                        					</group>
+	                        					<group>
+		                        					<field name="data_file" invisible="1" filename="data_file_name" />
+		                        					<field name="data_file_name" invisible="1" />
+	                        					</group>
+	                        				</group>
+                        				</form>
+                                    </field>
+                                </group>
+                                <group string="Applicable Individually">
+                                    <group string="Applicant 1">
+                                        <field name="documents_applicable_applicant1_line" nolabel="1">
+                                            <tree editable="bottom" create="1" delete="0">
+                                                <field name="name"/>
+                                                <field name="data_file" filename="data_file_name"/>
+                                                <field name="data_file_name" invisible="1"/>
+                                                <button name="action_show_document" string="View" type="object" class="btn-primary"/>
+                                            </tree>
+                                            <form>
+                                                <group>
+                                                    <group>
+                                                        <field name="name" />
+                                                    </group>
+                                                    <group>
+                                                        <field name="data_file" invisible="1" filename="data_file_name" />
+                                                        <field name="data_file_name" invisible="1" />
+                                                    </group>
+                                                </group>
+                                            </form>
+                                        </field>
+                                    </group>
+                                    <group string="Applicant 2">
+                                        <field name="documents_applicable_applicant2_line" nolabel="1">
+                                            <tree editable="bottom" create="1" delete="0">
+                                                <field name="name"/>
+                                                <field name="data_file" filename="data_file_name"/>
+                                                <field name="data_file_name" invisible="1"/>
+                                                <button name="action_show_document" string="View" type="object" class="btn-primary"/>
+                                            </tree>
+                                            <form>
+                                                <group>
+                                                    <group>
+                                                        <field name="name" />
+                                                    </group>
+                                                    <group>
+                                                        <field name="data_file" invisible="1" filename="data_file_name" />
+                                                        <field name="data_file_name" invisible="1" />
+                                                    </group>
+                                                </group>
+                                            </form>
+                                        </field>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="application_view_search" model="ir.ui.view">
+            <field name="name">application.view.search</field>
+            <field name="model">application</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" />
+                    <field name="applicant_1" />
+                    <field name="applicant_2" />
+                    <field name="mortgage_product_id"/>
+                    <filter name="first_time_buyer" string="First Time Buyer" domain="[('first_time_buyer', '=', 'yes')]" context="{}" />
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_status" string="Status" context="{'group_by': 'state'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="application_action" model="ir.actions.act_window">
+            <field name="name">Applications</field>
+            <field name="res_model">application</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="context">{'search_default_group_by_status': 1}</field> -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    The Applications are saved here.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_business_relationship_tree" model="ir.ui.view">
+            <field name="name">business.relationship.tree</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Business relationship">
+                    <field name="name"/>
+                    <field name='nature_of_business'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_relationship_view_form" model="ir.ui.view">
+            <field name="name">Business.Relationship.Form</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <form string="Business Relationship">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="image_1920" widget='image' class="oe_avatar" options='{"preview_image": "image_128"}'/>
+                        <div class="oe_title">
+                            <field name="is_company" invisible="1"/>
+                            <field name="parent_id" invisible="1"/>
+                            <field name="active" invisible="1"/>
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="Name"/>
+                            </h1>
+                            <div class="o_row">
+                                <field name="business_borrower" context="{'form_view_ref': 'business_lending_application.business_borrower_view_form'}" widget="res_partner_many2one" placeholder="Business Entity" domain="[('is_borrower', '=', True)]" />
+                            </div>
+                        </div>
+                        <group>
+                            <group>
+                                <field name='nature_of_business'/>
+                                <field name='martial_status'/>
+                                <field name='home_owner'/>
+                                <field name='dob'/>
+                                <field name='date_joined'/>
+                                <field name='dependent_children'/>
+                            </group>
+                            <group>
+                                <field name='account_number'/>
+                                <field name='employment_status'/>
+                                <field name='employment_year'/>
+                                <field name='experience_year'/>
+                                <field name='salary'/>
+                                <field name='member_number'/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="General Information" name="general_info">
+                                <group>
+                                    <group>
+                                        <field name="type" groups="base.group_no_one" invisible="1"/>
+                                        <span class="o_form_label o_td_label" name="address_name">
+                                            <b>Address</b>
+                                        </span>
+                                        
+                                        <div class="o_address_format">
+                                            <field name="street" placeholder="Street..." class="o_address_street"
+                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                            <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                            <field name="city" placeholder="City" class="o_address_city"
+                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                            <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}"
+                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                            <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                            <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'
+                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                        </div>
+                                        
+                                    </group>
+                                    <group>
+                                        
+                                        <field name="phone" widget="phone"/>
+                                        <field name="mobile" widget="phone"/>
+                                        <field name="user_ids" invisible="1"/>
+                                        <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
+                                        
+                                    
+                                        <field name="active_lang_count" invisible="1"/>
+                                        <label for="lang" attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}"/>
+                                        <div class="o_row" attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}">
+                                            <field name="lang"/>
+                                            <button
+                                                type="action"
+                                                name="%(base.res_lang_act_window)d"
+                                                class="btn-sm btn-link mb4 fa fa-globe"
+                                                aria-label="More languages"
+                                                groups="base.group_system"
+                                                title="More languages"
+                                            />
+                                        </div>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="business_relationship_action_customer" model="ir.actions.act_window">
+            <field name="name">Business Relationship</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_relationship', '=', True)]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_business_relationship_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('business_relationship_view_form')})]"/>
+            <field name="context">{'default_is_company': False,'default_is_relationship':True}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new Business Relationship in your address book
+              </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="application_number_sequence" model="ir.sequence">
+            <field name="name">Application Number Sequence</field>
+            <field name="code">application.number</field>
+            <field name="prefix">APL</field>
+            <field name="padding">5</field>
+        </record>
+    </data>
+</odoo>

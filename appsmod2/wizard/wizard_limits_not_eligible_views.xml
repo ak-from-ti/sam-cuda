@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wizard_limits_not_eligible_view_form" model="ir.ui.view">
+            <field name="name">wizard.limits.not.eligible.view.form</field>
+            <field name="model">wizard.limits.not.eligible</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form class="pt-0">
+                    <div class="oe_title">
+	                    <h1>
+	                    	<label for="message" string="Add The Non-Eligibility Reason"/>
+	                    </h1>
+                    </div>
+                    <field name="message" required="1" nolabel="1"/>
+                    <footer>
+                        <button name="limits_not_eligible_save" string="Save" type="object" class="oe_highlight"/>
+                        <button string="Cancel" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
